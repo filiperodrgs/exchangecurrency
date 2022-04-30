@@ -1,5 +1,7 @@
 package com.example.ExchangeCurrency.controller;
 
+import com.example.ExchangeCurrency.pojoPresenters.ConvertAmount;
+import com.example.ExchangeCurrency.pojoPresenters.ConvertAmountMultipleCurrencies;
 import com.example.ExchangeCurrency.pojoPresenters.ExchangeCurrencyFromAtoB;
 import com.example.ExchangeCurrency.pojoPresenters.GetAllExchangeRates;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.Arrays;
+import java.util.List;
 
 @RestController
 public class ExchangeController {
@@ -41,13 +44,16 @@ public class ExchangeController {
     public String getExchangeRates(@PathVariable String a) {
         String response = restTemplate.exchange( baseURL+"latest?base="+ a , HttpMethod.GET, httpRequest(), String.class).getBody();
         JsonObject jsonObject =  gettingJson(response);
-        System.out.println(jsonObject);
+
         return new GetAllExchangeRates(jsonObject).toString();
     }
 
-    @GetMapping(value = "/{a}/&/{amount}")
-    public String getAmountInAllCurrencies(@PathVariable String a, @PathVariable String amount) {
-        return restTemplate.exchange( baseURL +"latest?base="+ a + "&amount="+amount, HttpMethod.GET, httpRequest(), String.class).getBody();
+    @GetMapping(value = "/{a}/&/{amount}/{symbols}")
+    public String getAmountInGroupOfCurrencies(@PathVariable String a, @PathVariable String amount, @PathVariable String symbols) {
+        String response = restTemplate.exchange( baseURL+"latest?base="+ a +"&amount="+amount + "&symbols="+symbols , HttpMethod.GET, httpRequest(), String.class).getBody();
+        JsonObject jsonObject =  gettingJson(response);
+
+        return new ConvertAmountMultipleCurrencies(jsonObject).toString();
     }
 
     @GetMapping(value = "/{a}/{b}")
@@ -60,9 +66,10 @@ public class ExchangeController {
 
     @GetMapping(value = "/{a}/{b}/{amount}")
     public String getSpecificAmount(@PathVariable String a, @PathVariable String b,@PathVariable String amount) {
+        String response = restTemplate.exchange( baseURL+"convert?from="+ a +"&to="+b+"&amount="+amount, HttpMethod.GET, httpRequest(), String.class).getBody();
+        JsonObject jsonObject =  gettingJson(response);
+        return new ConvertAmount(jsonObject).toString();
 
-
-        return restTemplate.exchange( baseURL+ "convert?from="+a+"&to="+b+"&amount="+amount, HttpMethod.GET, httpRequest(), String.class).getBody();
     }
 
 
