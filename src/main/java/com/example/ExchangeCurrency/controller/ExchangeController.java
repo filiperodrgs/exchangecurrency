@@ -5,12 +5,14 @@ import com.example.ExchangeCurrency.pojoPresenters.ConvertAmountMultipleCurrenci
 import com.example.ExchangeCurrency.pojoPresenters.ExchangeCurrencyFromAtoB;
 import com.example.ExchangeCurrency.pojoPresenters.GetAllExchangeRates;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import com.google.gson.JsonObject;
@@ -20,10 +22,14 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
+@RequestMapping("api/")
 public class ExchangeController {
 
     @Autowired
     RestTemplate restTemplate;
+
+    @Autowired
+    CacheManager cacheManager;
 
     private HttpEntity<String> httpRequest(){
         HttpHeaders headers = new HttpHeaders();
@@ -41,6 +47,7 @@ public class ExchangeController {
     private String baseURL = "https://api.exchangerate.host/";
 
     @GetMapping(value = "/{a}")
+
     public String getExchangeRates(@PathVariable String a) {
         String response = restTemplate.exchange( baseURL+"latest?base="+ a , HttpMethod.GET, httpRequest(), String.class).getBody();
         JsonObject jsonObject =  gettingJson(response);
