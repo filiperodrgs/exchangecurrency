@@ -20,10 +20,10 @@ public class ConvertAmount {
     @Override
     public String toString() {
         return "" +
-                "From currency: " + from + ", "+
-                "To currency " + to + ", " +
-                "The amount of " + amount + ", " +
-                "result: " + result + " " + to +
+                "From: " + from + ", "+
+                "To " + to + ", " +
+                "Exchange value of: " + amount + " " + from +
+                " : " + result + " " + to +
                 "";
     }
 }

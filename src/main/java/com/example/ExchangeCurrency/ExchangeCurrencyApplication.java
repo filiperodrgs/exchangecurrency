@@ -12,14 +12,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 
+
 import java.util.concurrent.TimeUnit;
 
-
 @SpringBootApplication
-
 @EnableCaching
 public class ExchangeCurrencyApplication {
-
 
 
 	public static void main(String[] args) {
@@ -33,7 +31,8 @@ public class ExchangeCurrencyApplication {
 
 	@Bean
 	public Caffeine caffeineConfig() {
-		return Caffeine.newBuilder().expireAfterWrite(30, TimeUnit.MINUTES);
+		return Caffeine.newBuilder().expireAfterWrite(30, TimeUnit.SECONDS)
+				.refreshAfterWrite(10,TimeUnit.SECONDS);
 	}
 
 	@Bean
@@ -42,6 +41,8 @@ public class ExchangeCurrencyApplication {
 		caffeineCacheManager.setCaffeine(caffeine);
 		return caffeineCacheManager;
 	}
+
+
 
 
 

@@ -28,10 +28,10 @@ public class GetAllExchangeRates {
 
     @Override
     public String toString() {
-        return "{" +
-                "Rates of: " + base + ", "+
-                "result: "  + getAllRates() +"\n"+
-                '}';
+        return
+                "From: " + base + ", "+
+                "Exchange rates for all currencies: "  + getAllRates() +"\n"+
+                "";
     }
 }
 

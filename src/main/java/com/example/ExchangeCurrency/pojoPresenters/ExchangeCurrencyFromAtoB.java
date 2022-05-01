@@ -17,10 +17,11 @@ public class ExchangeCurrencyFromAtoB {
 
     @Override
     public String toString() {
-        return "{" +
-                "From currency: " + from + ", "+
-                "To currency " + to + ", " +
-                "result:" + rate +
-                '}';
+        return
+                "From: " + from + ", "+
+                "To: " + to + " > " +
+                "Exchange Rate: 1 " + from + " : " +
+                rate + " " + to +
+                "";
     }
 }

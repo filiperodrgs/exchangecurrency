@@ -28,10 +28,10 @@ public class ConvertAmountMultipleCurrencies {
 
     @Override
     public String toString() {
-        return "{" +
-                "From currency: " + base + ","+
+        return
+                "From: " + base + ", "+
 
-                "result:" + getAllRates() +
-                '}';
+                "Exchange value to selected currencies: " + getAllRates() +
+                "";
     }
 }

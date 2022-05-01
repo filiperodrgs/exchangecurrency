@@ -19,7 +19,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.Arrays;
-import java.util.List;
+
 
 @RestController
 @RequestMapping("api/")
@@ -47,7 +47,6 @@ public class ExchangeController {
     private String baseURL = "https://api.exchangerate.host/";
 
     @GetMapping(value = "/{a}")
-
     public String getExchangeRates(@PathVariable String a) {
         String response = restTemplate.exchange( baseURL+"latest?base="+ a , HttpMethod.GET, httpRequest(), String.class).getBody();
         JsonObject jsonObject =  gettingJson(response);
