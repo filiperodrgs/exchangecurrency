@@ -19,11 +19,11 @@ public class ConvertAmount {
 
     @Override
     public String toString() {
-        return "" +
+        return "{" +
                 "From: " + from + ", "+
-                "To " + to + ", " +
-                "Exchange value of: " + amount + " " + from +
-                " : " + result + " " + to +
-                "";
+                "To: " + to + ", " +
+                "Exchange value of: " + amount + ","+
+                "Result:  " + result +
+                "}";
     }
 }
